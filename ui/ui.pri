@@ -1,0 +1,2 @@
+FORMS += \
+    ui\mainwindow.ui
