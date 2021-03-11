@@ -32,13 +32,29 @@
    <property name="mouseTracking">
     <bool>false</bool>
    </property>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="racket1">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>100</y>
+      <y>170</y>
       <width>30</width>
       <height>150</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ball">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>400</y>
+      <width>30</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="mouseTracking">
