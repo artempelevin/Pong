@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QTimer>
 
+// ЗАРЕФАЧИТЬ ВСЮ РЕАЛИЗАЦИЮ, А ТО ТУТ ЧЁРТ НОГУ СЛОМИТ ЧТО НАПИСАНО
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -15,10 +17,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->racket1->setMouseTracking(true);
 
     timer = new QTimer(this);
-    timer->start(3);
+    timer->start(10);
     connect(timer, SIGNAL(timeout()), this, SLOT(moveBall()));
 
-    ball = new Ball(ui->ball->x(), ui->ball->y(), -2, -2);
+    ball = new Ball(ui->ball->x(), ui->ball->y(), -1, -1);
+    ui->racket1->setStyleSheet("background-color: rgb(45, 196, 136);");
+    ui->ball->setStyleSheet("background-color: rgb(45, 138, 196);");
 
     ui->ball->setFocus();
 }
@@ -46,7 +50,7 @@ void MainWindow::moveBall(){
             ball->move(200, 200);
         }
     }
-    else if(ball->getX() >= ui->centralwidget->width()){        // Столкновение с правой стеной
+    else if(ball->getX() >= ui->centralwidget->width() - 30){        // Столкновение с правой стеной
         ball->rotate(-1, 1);
     }
 
@@ -54,7 +58,7 @@ void MainWindow::moveBall(){
     else if(ball->getY() <= 0){          // Столкновение с потолком
         ball->rotate(1, -1);
     }
-    else if(ball->getY() >= ui->centralwidget->height()){       // Столкновение с полом
+    else if(ball->getY() >= ui->centralwidget->height() - 30){       // Столкновение с полом
         ball->rotate(1, -1);
     }
 
