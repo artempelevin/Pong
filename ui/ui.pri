@@ -1,2 +1,2 @@
 FORMS += \
-    ui\mainwindow.ui
+    ui/mainwindow.ui
