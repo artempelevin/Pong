@@ -1,6 +1,12 @@
 #ifndef BALL_H
 #define BALL_H
 
+enum {X_ROTATE = -1,
+      X_NOT_ROTATE = 1,
+      Y_ROTATE  = -1,
+      Y_NOT_ROTATE = 1
+     };
+
 class Ball{
 private:
     int x, y;

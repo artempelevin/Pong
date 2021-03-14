@@ -44,22 +44,22 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
 void MainWindow::moveBall(){
     if(ball->getX() <= ui->racket1->x() + ui->racket1->width()){    // Столкновение с левой стеной
         if(ball->getY() >= ui->racket1->y () && ball->getY() <= ui->racket1->y() + ui->racket1->height()){
-            ball->rotate(-1, 1);
+            ball->rotate(X_ROTATE, Y_NOT_ROTATE);
         }
         else{
             ball->move(200, 200);
         }
     }
     else if(ball->getX() >= ui->centralwidget->width() - 30){        // Столкновение с правой стеной
-        ball->rotate(-1, 1);
+        ball->rotate(X_ROTATE, Y_NOT_ROTATE);
     }
 
 
     else if(ball->getY() <= 0){          // Столкновение с потолком
-        ball->rotate(1, -1);
+        ball->rotate(X_NOT_ROTATE, Y_ROTATE);
     }
     else if(ball->getY() >= ui->centralwidget->height() - 30){       // Столкновение с полом
-        ball->rotate(1, -1);
+        ball->rotate(X_NOT_ROTATE, Y_ROTATE);
     }
 
 //ШАР УЛЕТАЕТ ПОЧЕМУ ТО В БОК ЭКРАНА, ИСПРАВЬ ЭТО НЕДОРОЗУМЕНИяе
