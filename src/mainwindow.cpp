@@ -43,23 +43,30 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
 
 
 void MainWindow::moveBall(){
-    if(ball->getX() <= ui->racket1->x() + ui->racket1->width()){    // Столкновение с левой стеной
-        if(ball->getY() >= ui->racket1->y () && ball->getY() <= ui->racket1->y() + ui->racket1->height()){
+    int ballX = ball->getX();
+    int ballY = ball->getY();
+    int ballSize = ui->ball->height();
+
+    int racketX = ui->racket1->x();
+    int racketY = ui->racket1->y();
+    int racketWidth  = ui->racket1->width();
+    int racketHeight = ui->racket1->height();
+
+    if(ballX <= racketX + racketWidth){     // Столкновение с левой стеной
+        if(ballY >= racketY && ballY <= racketY + racketHeight){
             ball->rotate(X_ROTATE, Y_NOT_ROTATE);
         }
-        else{
-            ball->move(200, 200);
+        else {
+            ball->move(SCREEN_CENTRE_X, SCREEN_CENTRE_Y);
         }
     }
-    else if(ball->getX() >= ui->centralwidget->width() - 30){        // Столкновение с правой стеной
+    else if(ballX >= SCREEN_WIDTH - ballSize){  // Столкновение с правой стеной
         ball->rotate(X_ROTATE, Y_NOT_ROTATE);
     }
-
-
-    else if(ball->getY() <= 0){          // Столкновение с потолком
+    else if(ballX <= 0){    // Столкновение с потолком
         ball->rotate(X_NOT_ROTATE, Y_ROTATE);
     }
-    else if(ball->getY() >= ui->centralwidget->height() - 30){       // Столкновение с полом
+    else if(ballY >= SCREEN_HEIGHT - ballSize){  // Столкновение с полом
         ball->rotate(X_NOT_ROTATE, Y_ROTATE);
     }
 
