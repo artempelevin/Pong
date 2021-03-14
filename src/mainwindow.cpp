@@ -1,8 +1,9 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-
 #include <QDebug>
 #include <QTimer>
+
+#include "ui_mainwindow.h"
+#include "setting.h"
 
 // ЗАРЕФАЧИТЬ ВСЮ РЕАЛИЗАЦИЮ, А ТО ТУТ ЧЁРТ НОГУ СЛОМИТ ЧТО НАПИСАНО
 
@@ -13,10 +14,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     timer = new QTimer(this);
-    timer->start(10);
+    timer->start(UPDATE_RATE);
     connect(timer, SIGNAL(timeout()), this, SLOT(moveBall()));
 
-    ball = new Ball(ui->ball->x(), ui->ball->y(), -1, -1);
+    ball = new Ball(ui->ball->x(), ui->ball->y(), -BALL_SPEED, -BALL_SPEED);
     ui->racket1->setStyleSheet("background-color: rgb(45, 196, 136);");
     ui->ball->setStyleSheet("background-color: rgb(45, 138, 196);");
 
@@ -25,14 +26,18 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event){
     int mouseY = mapFromGlobal(QCursor::pos()).y();
-    if(mouseY - ui->racket1->height()/2 >= 0 && mouseY + ui->racket1->height()/2 <= ui->centralwidget->height()){
-        ui->racket1->move(ui->racket1->x(), mouseY - ui->racket1->height()/2);
+    int racketX = ui->racket1->x();
+    int racketY = ui->racket1->y();
+    int racketHeight = ui->racket1->height();
+
+    if(mouseY - racketHeight/2 >= 0 && mouseY + racketHeight/2 <= SCREEN_HEIGHT){
+        ui->racket1->move(racketX, mouseY - racketHeight/2);
     }
-    else if(mouseY - ui->racket1->height()/2 < 0){
+    else if(mouseY - racketHeight/2 < 0){
         ui->racket1->move(0, 0);
     }
-    else if(mouseY + ui->racket1->height()/2 > ui->centralwidget->height()){
-        ui->racket1->move(0,  ui->centralwidget->height() - ui->racket1->height());
+    else if(mouseY + racketHeight/2 > SCREEN_HEIGHT){
+        ui->racket1->move(0,  SCREEN_HEIGHT - racketHeight);
     }
 }
 
