@@ -12,10 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    this->setMouseTracking(true);
-    centralWidget()->setMouseTracking(true);
-    ui->racket1->setMouseTracking(true);
-
     timer = new QTimer(this);
     timer->start(10);
     connect(timer, SIGNAL(timeout()), this, SLOT(moveBall()));
