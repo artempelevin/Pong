@@ -63,7 +63,7 @@ void MainWindow::moveBall(){
     else if(ballX >= SCREEN_WIDTH - ballSize){  // Столкновение с правой стеной
         ball->rotate(X_ROTATE, Y_NOT_ROTATE);
     }
-    else if(ballX <= 0){    // Столкновение с потолком
+    else if(ballY <= 0){    // Столкновение с потолком
         ball->rotate(X_NOT_ROTATE, Y_ROTATE);
     }
     else if(ballY >= SCREEN_HEIGHT - ballSize){  // Столкновение с полом
