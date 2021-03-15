@@ -15,13 +15,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     timer = new QTimer(this);
     timer->start(UPDATE_RATE);
-    connect(timer, SIGNAL(timeout()), this, SLOT(moveBall()));
 
-    ball = new Ball(ui->ball->x(), ui->ball->y(), -BALL_SPEED, -BALL_SPEED);
+
+    ball = new Ball(ui->ball->x(), ui->ball->y(), -BALL_SPEED, -BALL_SPEED, nullptr);
+    connect(timer, SIGNAL(timeout()), ball, SLOT(move()));
+    connect(ball, SIGNAL(ballHasMoved()), this, SLOT(moveBall()));
+
     ui->racket1->setStyleSheet("background-color: rgb(45, 196, 136);");
     ui->ball->setStyleSheet("background-color: rgb(45, 138, 196);");
 
-    ui->ball->setFocus();
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event){
@@ -71,7 +73,7 @@ void MainWindow::moveBall(){
     }
 
 //ШАР УЛЕТАЕТ ПОЧЕМУ ТО В БОК ЭКРАНА, ИСПРАВЬ ЭТО НЕДОРОЗУМЕНИяе
-    ball->move();
+//    ball->move();
     ui->ball->move(ball->getX(), ball->getY());
 
 }
