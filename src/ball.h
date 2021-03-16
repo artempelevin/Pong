@@ -20,7 +20,7 @@ public slots:
     void move();
     void move(const int& x, const int& y);
 public:
-    Ball(const int& x, const int& y, const int& dx, const int& dy, QObject *parent);
+    Ball(const int& x, const int& y, const int& dx, const int& dy, QObject *parent=nullptr);
      ~Ball();
     const int& getX() const;
     const int& getY() const;

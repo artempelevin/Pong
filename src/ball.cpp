@@ -1,7 +1,7 @@
 #include <algorithm>
 #include "ball.h"
 
-Ball::Ball(const int& x, const int& y, const int& dx, const int& dy, QObject *parent=nullptr)
+Ball::Ball(const int& x, const int& y, const int& dx, const int& dy, QObject *parent)
     :QObject(parent), x(x), y(y), dx(dx), dy(dy)    {}
 
 Ball::~Ball() {}
