@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include "ball.h"
+#include "scene.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,11 +18,12 @@ public:
     ~MainWindow();
 private:
     virtual void mouseMoveEvent(QMouseEvent *event);
+
 private slots:
-    void moveBall();
+    void drawingBall();
+    void drawingRacket();
 private:
     Ui::MainWindow *ui;
-    QTimer *timer;
-    Ball *ball;
+    Scene* scene;
 };
 #endif // MAINWINDOW_H

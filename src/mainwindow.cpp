@@ -13,69 +13,54 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    timer = new QTimer(this);
-    timer->start(UPDATE_RATE);
-
-
-    ball = new Ball(ui->ball->x(), ui->ball->y(), -BALL_SPEED, -BALL_SPEED, nullptr);
-    connect(timer, SIGNAL(timeout()), ball, SLOT(move()));
-    connect(ball, SIGNAL(ballHasMoved()), this, SLOT(moveBall()));
+    scene = new Scene();
+    scene->createBall(BALL_START_X, BALL_START_Y, -BALL_SPEED, -BALL_SPEED);
+    scene->createRacket(0, SCREEN_CENTRE_Y - RACKET_HEIGHT/2, RACKET_WIDTH, RACKET_HEIGHT, 1);
+    scene->createRacket(SCREEN_WIDTH - RACKET_WIDTH, SCREEN_CENTRE_Y  - RACKET_HEIGHT/2, RACKET_WIDTH, RACKET_HEIGHT, 2);
 
     ui->racket1->setStyleSheet("background-color: rgb(45, 196, 136);");
+    ui->racket2->setStyleSheet("background-color: rgb(170, 40, 30);");
     ui->ball->setStyleSheet("background-color: rgb(45, 138, 196);");
 
+    ui->racket1->setGeometry(scene->racket1->getX(), scene->racket1->getY(), scene->racket1->getW(), scene->racket1->getH());
+    ui->racket2->setGeometry(scene->racket2->getX(), scene->racket2->getY(), scene->racket2->getW(), scene->racket2->getH());
+    ui->ball->setGeometry(scene->ball->getX(), scene->ball->getY(), BALL_SIZE, BALL_SIZE);
+
+    connect(scene->ball,    SIGNAL(ballHasMoved()),   this, SLOT(drawingBall()));
+    connect(scene->racket1, SIGNAL(racketHasMoved()), this, SLOT(drawingRacket()));
+    connect(scene->racket2, SIGNAL(racketHasMoved()), this, SLOT(drawingRacket()));
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event){
     int mouseY = mapFromGlobal(QCursor::pos()).y();
-    int racketX = ui->racket1->x();
-    int racketY = ui->racket1->y();
-    int racketHeight = ui->racket1->height();
 
-    if(mouseY - racketHeight/2 >= 0 && mouseY + racketHeight/2 <= SCREEN_HEIGHT){
-        ui->racket1->move(racketX, mouseY - racketHeight/2);
+    if(mouseY - RACKET_HEIGHT/2 >= 0 && mouseY + RACKET_HEIGHT/2 <= SCREEN_HEIGHT){
+        scene->racket1->setY(mouseY - RACKET_HEIGHT/2);
     }
-    else if(mouseY - racketHeight/2 < 0){
-        ui->racket1->move(0, 0);
+    else if(mouseY - RACKET_HEIGHT/2 < 0){
+        scene->racket1->setY(0);
     }
-    else if(mouseY + racketHeight/2 > SCREEN_HEIGHT){
-        ui->racket1->move(0,  SCREEN_HEIGHT - racketHeight);
+    else if(mouseY + RACKET_HEIGHT/2 > SCREEN_HEIGHT){
+        scene->racket1->setY(SCREEN_HEIGHT - RACKET_HEIGHT);
     }
 }
 
 
-void MainWindow::moveBall(){
-    int ballX = ball->getX();
-    int ballY = ball->getY();
-    int ballSize = ui->ball->height();
+void MainWindow::drawingBall(){
 
-    int racketX = ui->racket1->x();
-    int racketY = ui->racket1->y();
-    int racketWidth  = ui->racket1->width();
-    int racketHeight = ui->racket1->height();
+    ui->ball->move(scene->ball->getX(), scene->ball->getY());
 
-    if(ballX <= racketX + racketWidth){     // Столкновение с левой стеной
-        if(ballY >= racketY && ballY <= racketY + racketHeight){
-            ball->rotate(X_ROTATE, Y_NOT_ROTATE);
-        }
-        else {
-            ball->move(SCREEN_CENTRE_X, SCREEN_CENTRE_Y);
-        }
-    }
-    else if(ballX >= SCREEN_WIDTH - ballSize){  // Столкновение с правой стеной
-        ball->rotate(X_ROTATE, Y_NOT_ROTATE);
-    }
-    else if(ballY <= 0){    // Столкновение с потолком
-        ball->rotate(X_NOT_ROTATE, Y_ROTATE);
-    }
-    else if(ballY >= SCREEN_HEIGHT - ballSize){  // Столкновение с полом
-        ball->rotate(X_NOT_ROTATE, Y_ROTATE);
-    }
+}
 
-//ШАР УЛЕТАЕТ ПОЧЕМУ ТО В БОК ЭКРАНА, ИСПРАВЬ ЭТО НЕДОРОЗУМЕНИяе
-//    ball->move();
-    ui->ball->move(ball->getX(), ball->getY());
+void MainWindow::drawingRacket(){
+    Racket* racket = static_cast<Racket*>(QObject::sender());
 
+    if(racket->getIndex() == 1){
+        ui->racket1->move(racket->getX(), racket->getY());
+    }
+    if(racket->getIndex() == 2){
+        ui->racket2->move(racket->getX(), racket->getY());
+    }
 }
 
 MainWindow::~MainWindow()
