@@ -18,5 +18,6 @@
 #define RACKET_HEIGHT       150                             // Высота ракетки
 
 #define PLAYER_MOD          true                            // Левой ракеткой управляет игрок
+#define BOT_MOD             !PLAYER_MOD                     // Левой ракеткой управляет бот
 
 #endif // SETTING_H
