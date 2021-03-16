@@ -25,7 +25,6 @@ void Scene::ballPhysicsProcessing(){
 
     int racket1X = racket1->getX();
     int racket1Y = racket1->getY();
-    int racket2X = racket2->getX();
     int racket2Y = racket2->getY();
 
     if(ballX < racket1X + RACKET_WIDTH){     // Столкновение с левой стеной
