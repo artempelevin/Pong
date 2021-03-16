@@ -32,16 +32,18 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event){
-    int mouseY = mapFromGlobal(QCursor::pos()).y();
+    if(PLAYER_MOD){
+        int mouseY = mapFromGlobal(QCursor::pos()).y();
 
-    if(mouseY - RACKET_HEIGHT/2 >= 0 && mouseY + RACKET_HEIGHT/2 <= SCREEN_HEIGHT){
-        scene->racket1->setY(mouseY - RACKET_HEIGHT/2);
-    }
-    else if(mouseY - RACKET_HEIGHT/2 < 0){
-        scene->racket1->setY(0);
-    }
-    else if(mouseY + RACKET_HEIGHT/2 > SCREEN_HEIGHT){
-        scene->racket1->setY(SCREEN_HEIGHT - RACKET_HEIGHT);
+        if(mouseY - RACKET_HEIGHT/2 >= 0 && mouseY + RACKET_HEIGHT/2 <= SCREEN_HEIGHT){
+            scene->racket1->setY(mouseY - RACKET_HEIGHT/2);
+        }
+        else if(mouseY - RACKET_HEIGHT/2 < 0){
+            scene->racket1->setY(0);
+        }
+        else if(mouseY + RACKET_HEIGHT/2 > SCREEN_HEIGHT){
+            scene->racket1->setY(SCREEN_HEIGHT - RACKET_HEIGHT);
+        }
     }
 }
 

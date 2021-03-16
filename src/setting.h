@@ -13,9 +13,10 @@
 #define BALL_START_X        SCREEN_CENTRE_X -BALL_SIZE/2    // Стартовая координата X шара
 #define BALL_START_Y        SCREEN_CENTRE_Y -BALL_SIZE/2    // Стартовая координата Y шара
 
-
 #define RACKET_SPEED        1                               // Скорость ракетки (в координатах)
 #define RACKET_WIDTH        30                              // Ширина ракетки
 #define RACKET_HEIGHT       150                             // Высота ракетки
+
+#define PLAYER_MOD          true                            // Левой ракеткой управляет игрок
 
 #endif // SETTING_H
